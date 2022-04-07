@@ -26,6 +26,7 @@ int main()
         if (strlen(tmp) < strlen(min))
             strcpy(min, tmp);
     }
+    cout << "Довжина найкоротшого слова = " << strlen(min) << endl;
     cout << "Найкоротше слово = " << min << endl;
 
     return 0;
