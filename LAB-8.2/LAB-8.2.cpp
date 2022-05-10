@@ -6,28 +6,42 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <sstream>
+#include <string>
+#include <Windows.h>
 
 using namespace std;
 
+int Length(string& s)
+{
+	int k = 0; // довжина слова
+	int min = 0; // мінімальне значення
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		k++;											// лічильник довжини слова
+		if ((s[i + 1] == ' ') || (s[i + 1] == '\0'))	// якщо наступний символ пробіл або нуль-символ
+		{
+			if (min == 0)								// якщо min=0 — це значить, що я знайшов перше слово та
+				min = k;								// мінімальним значенням за замовчуванням буде довжина першого слова
+			if (k < min)
+				min = k;								// якщо довжина слова менше min, то присвоюєм нове значення для min
+			k = -1;										// обнуляємо довжину слова. -1, тому що наступний символ у циклі це
+		}												// пробіл, а його рахувати не треба
+	}
+	return min;
+}
+
 int main()
 {
-    setlocale(LC_ALL, "Ukrainian");
+	SetConsoleCP(1251); // встановлення сторінки win-cp1251 в потік вводу
+	SetConsoleOutputCP(1251); // встановлення сторінки win-cp1251 в потік виводу
 
-    char str[256], tmp[256], min[256];
+	string s;
 
-    cout << "Ввести лiтерний рядок:" << endl;
-    cin.getline(str, 256);
+	cout << "Ввести лiтерний рядок:" << endl;
+	getline(cin, s);
 
-    istringstream ist(str); // перетворює рядок у потік
-    ist >> min;
-    while (ist >> tmp)
-    {
-        if (strlen(tmp) < strlen(min))
-            strcpy(min, tmp);
-    }
-    cout << "Довжина найкоротшого слова = " << strlen(min) << endl;
-    cout << "Найкоротше слово = " << min << endl;
+    cout << "Довжина найкоротшого слова = " << Length(s) << endl;
 
     return 0;
 }
